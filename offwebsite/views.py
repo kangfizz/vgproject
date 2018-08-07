@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from datetime import datetime
 
-def hello_world(request):
-    return render(request, 'hello_world.html', {
+def index(request):
+    return render(request, 'index.html', {
         'current_time': str(datetime.now()),
     })

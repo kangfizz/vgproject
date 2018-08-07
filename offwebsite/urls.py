@@ -5,5 +5,5 @@ from django.conf.urls import url, include
 from . import views
 
 urlpatterns = [
-    url('^hello/', views.hello_world),
+    url('^index/', views.index),
 ]

@@ -25,7 +25,7 @@ SECRET_KEY = '!hol^7-sc1cp%52)(^bx7vptmo)o%^i@guj-aipzk=+7ren+o%'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['172.105.212.81','www.ayano-squirrel.com']
+ALLOWED_HOSTS = ['172.105.212.81','www.ayano-squirrel.com','127.0.0.1']
 
 
 # Application definition

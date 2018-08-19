@@ -6,8 +6,10 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from offwebsite import views as oviews
 
 urlpatterns = [
+    url(r'^/', oviews.fullpage),
     url(r'^admin/', admin.site.urls),
     url(r'^vgsite/', include('offwebsite.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

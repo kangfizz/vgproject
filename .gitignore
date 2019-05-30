@@ -1,5 +1,5 @@
 db.sqlite3
-static
+static/upload
 media
 udo journalctl -u gunicorn
 *.pyc

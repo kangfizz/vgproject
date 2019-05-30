@@ -1,0 +1,6 @@
+db.sqlite3
+static
+media
+udo journalctl -u gunicorn
+*.pyc
+.well-known

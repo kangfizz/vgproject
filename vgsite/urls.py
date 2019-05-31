@@ -13,4 +13,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^vgsite/', include('offwebsite.urls')),
     url(r'^static/(?P<path>.*)$', django.views.static.serve, {'document_root': settings.STATIC_ROOT}),
+    url(r'^media/(?P<path>.*)$', django.views.static.serve, {'document_root': settings.MEDIA_ROOT}),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

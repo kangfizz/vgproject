@@ -29,7 +29,7 @@ class Api:
         soup = BeautifulSoup(html.text, 'html.parser')
         _list = soup.findAll('img', 'aligncenter')
 
-        return self.saveimage(_list, 'static/upload/todays_card_ws.png', self.url)
+        return self.saveimage(_list, 'media/upload/todays_card_ws.png', self.url)
 
     def get_vg_today_card(self):
         """取得每日一卡(VG)"""
@@ -37,4 +37,4 @@ class Api:
         soup = BeautifulSoup(html.text, 'html.parser')
         _list = soup.findAll('img', alt='【カードファイト!! ヴァンガード】今日のカード')
 
-        return self.saveimage(_list, 'static/upload/todays_card_vg.png')
+        return self.saveimage(_list, 'media/upload/todays_card_vg.png')

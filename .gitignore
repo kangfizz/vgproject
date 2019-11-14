@@ -4,3 +4,4 @@ media
 udo journalctl -u gunicorn
 *.pyc
 .well-known
+.DS_Store

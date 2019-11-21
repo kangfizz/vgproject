@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Facebook Login JavaScript Example</title>
+<meta charset="UTF-8">
+</head>
+<body>
+//  The JS SDK Login Button 
+
+
+<button type="button" class="btn btn-primary" onclick="checkLoginState();">Login</button>
+<button type="button" class="btn btn-primary" onclick="LogoutFromFB();">Logout</button>
+<button type="button" class="btn btn-primary" onclick="GetStatus();">Get Status</button>
+<hr>
+<button type="button" class="btn btn-primary" onclick="getToken();">Get Token</button>
+<button type="button" class="btn btn-primary" onclick="PushMsg();">Push Message</button>
+<button type="button" class="btn btn-primary" onclick="unAuth();">Unauthorize</button>
+
+<div id="status">
+</div>
+<div id="access_dict">
+</div>
+<script>
+  var accessToken = "";
+  var pageID = "";
+  let conversation_id = '410397512941618';
+
+  function statusChangeCallback(response) {  // Called with the results from FB.getLoginStatus().
+    console.log('statusChangeCallback');
+    console.log(response);                   // The current login status of the person.
+    if (response.status === 'connected') {   // Logged into your webpage and Facebook.
+      console.log(JSON.stringify(response.authResponse));
+      accessToken = response.authResponse.accessToken;
+      testAPI();  
+    } else {                                 // Not logged into your webpage or we are unable to tell.
+      document.getElementById('status').innerHTML = 'Please log ' +
+        'into this webpage.';
+    }
+  }
+
+
+  function checkLoginState() {     
+    FB.login(function(response) {
+    // handle the response
+    FB.getLoginStatus(function(response) {   // See the onlogin handler
+      statusChangeCallback(response);
+    });
+    }, {scope: 
+    'public_profile, email, pages_messaging,　manage_pages, pages_show_list, publish_pages, read_page_mailboxes'});          // Called when a person is finished with the Login Button.
+  }
+
+  function LogoutFromFB() {
+    FB.logout(function(response) {
+        FB.getLoginStatus(function(response) {   // See the onlogin handler
+        statusChangeCallback(response);
+        }); 
+    });   
+  }
+
+  function GetStatus() {
+    FB.getLoginStatus(function(response) {   // See the onlogin handler
+      statusChangeCallback(response);
+    });    
+  }
+
+  function PushMsg() {
+    console.log(accessToken);
+    FB.api(
+        `/1864385243875447/messages?field=${accessToken}`,
+        "POST",
+        {
+            "recipient":
+            {
+                "id":"2438950106426502"
+            },
+            "message": "This is a test message"
+        },
+        function (response) {
+        if (response && !response.error) {
+            /* handle the result */
+            console.log(response);
+        } else{
+            console.log(response.error);
+        }
+        }
+    );
+  }
+
+
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '410397512941618',
+      cookie     : true,                    // Enable cookies to allow the server to access the session.
+      status     : true,
+      xfbml      : true,                     // Parse social plugins on this webpage.
+      version    : 'v5.0'         // Use this Graph API version for this call.
+    });
+
+  };
+
+  
+  (function(d, s, id) {                      // Load the SDK asynchronously
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "https://connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+
+ 
+  function testAPI() {                      // Testing Graph API after login.  See statusChangeCallback() for when this call is made.
+    console.log('Welcome!  Fetching your information.... ');
+    FB.api('/me?fields=id,name,email', function(response) {
+      console.log(response);
+      console.log('Successful login for: ' + response.name);
+      document.getElementById('status').innerHTML =
+        'Thanks for logging in, ' + response.name + '!';
+    });
+  }
+  
+  function unAuth() {
+    FB.api('/me/permissions', 'delete', function(res) {
+    if (res && !res.error) {
+        if(res){
+            alert('Permission revoked.');
+        }
+        else {
+            alert('Permissions delete error.');
+        }
+    }
+    else {
+        alert('Try again later.');
+    }
+    });
+  }
+
+  function getToken() {
+    FB.api(
+        "/1864385243875447/subscribed_apps",
+        function (response) {
+        if (response && !response.error) {
+            console.log(response);
+            /* handle the result */
+        } else {
+            console.log(response);
+        }
+        }
+    );
+  }
+
+</script>
+
+</body>
+</html>

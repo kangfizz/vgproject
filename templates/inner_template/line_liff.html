@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Line Login JavaScript Example</title>
+<meta charset="UTF-8">
+</head>
+<body>
+//  The JS Line Liff Button 
+
+
+<input type="button" value="Line Login" 
+onclick="location.href='https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1653916263&redirect_uri=https://ayano-squirrel.com/database/auth/&state=12345abcde&scope=openid%20profile'">
+
+<div id="status">
+</div>
+<div id="access_dict">
+</div>
+
+<script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
+<script>
+function initializeLiff(myLiffId) {
+    liff
+        .init({
+            liffId: myLiffId
+        })
+        .then(() => {
+            // start to use LIFF's api
+            initializeApp();
+        })
+        .catch((err) => {
+            document.getElementById("liffAppContent").classList.add('hidden');
+            document.getElementById("liffInitErrorMessage").classList.remove('hidden');
+        });
+}
+
+$(document).ready(function() {
+    initializeLiff(myLiffId)
+
+});
+
+</script>
+
+</body>
+</html>
+
+</body>
+</html>

@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from datetime import datetime
 
+
 # Create your views here.
 def index(request):
     """官網（內)"""
@@ -8,7 +9,20 @@ def index(request):
         'current_time': str(datetime.now()),
     })
 
+
 def testpage(request):
     """FB測試頁面"""
     return render(request, 'inner_template/FB_test.html', {
+    })
+
+
+def testpage_line(request):
+    """LINE LOGIN測試頁面"""
+    return render(request, 'inner_template/line_test.html', {
+    })
+
+
+def testpage_lineliff(request):
+    """LINE LIFF測試頁面"""
+    return render(request, 'inner_template/line_liff.html', {
     })

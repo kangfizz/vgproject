@@ -9,21 +9,21 @@
 
 
 <button type="button" class="btn btn-primary" onclick="checkLoginState();">Login</button>
-<button type="button" class="btn btn-primary" onclick="LogoutFromFB();">Logout</button>
-<button type="button" class="btn btn-primary" onclick="GetStatus();">Get Status</button>
+<button type="button" class="btn btn-primary" onclick="logoutFromFB();">Logout</button>
+<button type="button" class="btn btn-primary" onclick="getStatus();">Get Status</button>
 <hr>
 <button type="button" class="btn btn-primary" onclick="getToken();">Get Token</button>
-<button type="button" class="btn btn-primary" onclick="PushMsg();">Push Message</button>
+<button type="button" class="btn btn-primary" onclick="pushMsg();">Push Message</button>
 <button type="button" class="btn btn-primary" onclick="unAuth();">Unauthorize</button>
 
 <div id="status">
 </div>
 <div id="access_dict">
 </div>
-<script>
+{% comment %} <script>
   var accessToken = "";
   var pageID = "";
-  let conversation_id = '410397512941618';
+  let conversation_id = '1179833365548814';
 
   function statusChangeCallback(response) {  // Called with the results from FB.getLoginStatus().
     console.log('statusChangeCallback');
@@ -49,7 +49,7 @@
     'public_profile, email, pages_messaging,　manage_pages, pages_show_list, publish_pages, read_page_mailboxes'});          // Called when a person is finished with the Login Button.
   }
 
-  function LogoutFromFB() {
+  function logoutFromFB() {
     FB.logout(function(response) {
         FB.getLoginStatus(function(response) {   // See the onlogin handler
         statusChangeCallback(response);
@@ -57,13 +57,13 @@
     });   
   }
 
-  function GetStatus() {
+  function getStatus() {
     FB.getLoginStatus(function(response) {   // See the onlogin handler
       statusChangeCallback(response);
     });    
   }
 
-  function PushMsg() {
+  function pushMsg() {
     console.log(accessToken);
     FB.api(
         `/1864385243875447/messages?field=${accessToken}`,
@@ -89,9 +89,8 @@
 
   window.fbAsyncInit = function() {
     FB.init({
-      appId      : '410397512941618',
+      appId      : '1238894042934279',
       cookie     : true,                    // Enable cookies to allow the server to access the session.
-      status     : true,
       xfbml      : true,                     // Parse social plugins on this webpage.
       version    : 'v5.0'         // Use this Graph API version for this call.
     });
@@ -148,7 +147,104 @@
     );
   }
 
+</script> {% endcomment %}
+<script>
+  // Basic FB api setting
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '1179833365548814',
+      cookie     : true,                     // Enable cookies to allow the server to access the session.
+      xfbml      : true,                     // Parse social plugins on this webpage.
+      version    : 'v5.0'           // Use this Graph API version for this call.
+    });
+
+
+    FB.getLoginStatus(function(response) {   // Called after the JS SDK has been initialized.
+      statusChangeCallback(response);        // Returns the login status.
+    });
+  };
+
+  
+  (function(d, s, id) {                      // Load the SDK asynchronously
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "https://connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
 </script>
+
+
+<script>
+  // 狀態變更
+  function statusChangeCallback(response) {  // Called with the results from FB.getLoginStatus().
+    console.log('statusChangeCallback');
+    console.log(response);                   // The current login status of the person.
+    if (response.status === 'connected') {   // Logged into your webpage and Facebook.
+      console.log(JSON.stringify(response.authResponse));
+      testAPI();  
+    } else {                                 // Not logged into your webpage or we are unable to tell.
+      document.getElementById('status').innerHTML = 'Please log ' +
+        'into this webpage.';
+    }
+  }
+
+  // 成功登入後event
+  function testAPI() {                      // Testing Graph API after login.  See statusChangeCallback() for when this call is made.
+    console.log('Welcome!  Fetching your information.... ');
+    FB.api('/me', function(response) {
+      console.log('Successful login for: ' + response.name);
+      document.getElementById('status').innerHTML =
+        'Thanks for logging in, ' + response.name + '!';
+    });
+  }
+
+  // 查看目前狀態
+  function getStatus() {
+    FB.getLoginStatus(function(response) {   // See the onlogin handler
+      statusChangeCallback(response);
+    });    
+  }
+
+  // 登入按鈕event
+  // 注意, Scope不能寫錯(比如說最後多一個“,”)
+  function checkLoginState() {     
+    FB.login(function(response) {
+      // handle the response
+      getStatus();
+    }, {scope: 'public_profile,email,pages_messaging,manage_pages, pages_show_list, publish_pages, read_page_mailboxes'});
+  }
+  
+  // 登出按鈕event
+  function logoutFromFB() {
+    FB.logout(function(response) {
+        getStatus();
+    });   
+  }
+ 
+  // 取消授權
+  function unAuth() {
+    FB.api('/me/permissions', 'delete', function(res) {
+    if (res && !res.error) {
+        if(res){
+            alert('Permission revoked.');
+        }
+        else {
+            alert('Permissions delete error.');
+        }
+    }
+    else {
+        alert('Try again later.');
+    }
+    });
+  }
+
+</script>
+
+
+
+</body>
+</html>
 
 </body>
 </html>

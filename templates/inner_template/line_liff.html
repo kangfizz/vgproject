@@ -10,14 +10,19 @@
 
 <input type="button" value="Line Login" 
 onclick="location.href='https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1653916263&redirect_uri=https://ayano-squirrel.com/database/auth/&state=12345abcde&scope=openid%20profile'">
+<button type="button" href="javascript:void(0)" onclick="getPersonProfile()">Get Profile</button>
 
 <div id="status">
 </div>
 <div id="access_dict">
 </div>
-
+<script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
 <script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
 <script>
+let LiffId = "1563542045-mwVXPdwX";
 function initializeLiff(myLiffId) {
     liff
         .init({
@@ -33,9 +38,22 @@ function initializeLiff(myLiffId) {
         });
 }
 
-$(document).ready(function() {
-    initializeLiff(myLiffId)
+function getPersonProfile() {
+    liff.getProfile()
+    .then(profile => {
+    let name = profile.displayName;
+    let uid = profile.userId;
+    alert(name);
+    alert(uid);
+    })
+    .catch((err) => {
+    console.log('error', err);
+    });
+}
 
+
+$(document).ready(function() {
+    initializeLiff(LiffId)
 });
 
 </script>

@@ -22,25 +22,22 @@ onclick="location.href='https://access.line.me/oauth2/v2.1/authorize?response_ty
   crossorigin="anonymous"></script>
 <script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
 <script>
-let LiffId = "1563542045-mwVXPdwX";
+// let LiffId = "1563542045-mwVXPdwX";
+let LiffId = "1653916263-wJ5pNrWJ";
 function initializeLiff(myLiffId) {
     liff
         .init({
             liffId: myLiffId
         })
-        .then((data) => {
+        .then(() => {
             // start to use LIFF's api
-            initializeApp(data);
+            getPersonProfile();
         })
         .catch((err) => {
             console.log(err);
-            // document.getElementById("liffAppContent").classList.add('hidden');
-            // document.getElementById("liffInitErrorMessage").classList.remove('hidden');
+            //document.getElementById("liffAppContent").classList.add('hidden');
+            //document.getElementById("liffInitErrorMessage").classList.remove('hidden');
         });
-}
-function initializeApp(data) {
-    alert(data.context.userId);
-    alert(data.context.displayName);
 }
 
 function getPersonProfile() {

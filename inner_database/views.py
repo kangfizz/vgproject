@@ -1,5 +1,6 @@
-from django.shortcuts import render
 from datetime import datetime
+
+from django.shortcuts import redirect, render
 
 
 # Create your views here.
@@ -26,3 +27,9 @@ def testpage_lineliff(request):
     """LINE LIFF測試頁面"""
     return render(request, 'inner_template/line_liff.html', {
     })
+
+
+def testpage_redirect(request):
+    """重新導向頁面"""
+    url = request.GET.get("url")
+    return redirect(url)

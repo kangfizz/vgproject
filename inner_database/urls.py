@@ -9,4 +9,5 @@ urlpatterns = [
     url('^test_facebook/', views.testpage),
     url('^test_line/', views.testpage_line),
     url('^test_line_liff/', views.testpage_lineliff),
+    url("^test_redirect/", views.testpage_redirect),
 ]

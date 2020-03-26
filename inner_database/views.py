@@ -32,4 +32,6 @@ def testpage_lineliff(request):
 def testpage_redirect(request):
     """重新導向頁面"""
     url = request.GET.get("url")
-    return redirect(url)
+    return render(request, 'inner_template/test_redirect.html', {
+        "url": url
+    })

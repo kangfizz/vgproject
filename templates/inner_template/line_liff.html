@@ -45,10 +45,11 @@ function getPersonProfile() {
     .then(profile => {
     let name = profile.displayName;
     let uid = profile.userId;
-    alert(name);
-    alert(uid);
+    alert(name + ' / ' + uid);
     window.location.href = "https://line.me/R/ti/p/@mmd1404x";
-    liff.closeWindow();
+    setTimeout(() => {
+      liff.closeWindow();
+    }, 500);
     })
     .catch((err) => {
     console.log('error', err);

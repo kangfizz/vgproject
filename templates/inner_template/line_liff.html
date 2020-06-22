@@ -46,10 +46,20 @@ function getPersonProfile() {
     let name = profile.displayName;
     let uid = profile.userId;
     alert(name + ' / ' + uid);
-    window.location.href = "https://line.me/R/ti/p/@mmd1404x";
-    setTimeout(() => {
-      liff.closeWindow();
-    }, 5000);
+    //window.location.href = "https://line.me/R/ti/p/@mmd1404x";
+        liff.sendMessages([
+        {
+            type:'text',
+            text:'Hello, World!'
+        }
+        ])
+        .then(() => {
+        console.log('message sent');
+        liff.closeWindow();
+        })
+        .catch((err) => {
+        console.log('error', err);
+        });
     })
     .catch((err) => {
     console.log('error', err);
